@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 128" role="img" aria-label="TidyMargin">
+  <g>
+    <rect x="4" y="4" width="120" height="120" rx="28" fill="#0F5257"/>
+    <path d="M30 68 L52 90 L98 40" fill="none" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M84 38 L100 38 L100 54" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M38 24 C40 32 42 34 50 36 C42 38 40 40 38 48 C36 40 34 38 26 36 C34 34 36 32 38 24 Z" fill="#E8A33D"/>
+  </g>
+  <text x="148" y="86" font-family="Inter, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="66" font-weight="700" letter-spacing="-1.5">
+    <tspan fill="#0F5257">Tidy</tspan><tspan fill="#E8A33D">Margin</tspan>
+  </text>
+</svg>

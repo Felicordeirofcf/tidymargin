@@ -12,6 +12,7 @@ from pathlib import Path
 import openpyxl
 from openpyxl.worksheet.print_settings import PrintArea
 import pypdfium2 as pdfium
+from PIL import ImageOps
 
 ROOT = Path(__file__).resolve().parent.parent
 SRC = ROOT / "products" / "premium" / "TidyMargin-Premium-EXAMPLE.xlsx"
@@ -42,7 +43,13 @@ def render(sheet, slug, tmp, scale=2.2):
     subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", str(tmp), str(x)],
                    check=True, capture_output=True, timeout=180)
     pdf = pdfium.PdfDocument(str(tmp / f"{slug}.pdf"))
-    img = pdf[0].render(scale=scale).to_pil()
+    img = pdf[0].render(scale=scale).to_pil().convert("RGB")
+    # trim the white page margins, keep a small border
+    bbox = ImageOps.invert(img).getbbox()
+    if bbox:
+        pad = 30
+        img = img.crop((max(bbox[0] - pad, 0), max(bbox[1] - pad, 0),
+                        min(bbox[2] + pad, img.width), min(bbox[3] + pad, img.height)))
     img.save(OUT / f"{slug}.png", optimize=True)
     return OUT / f"{slug}.png"
 

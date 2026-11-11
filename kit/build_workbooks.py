@@ -365,7 +365,6 @@ def build_calculator(wb, example):
         default = {"crew": 2, "property": "House", "service": "Standard Cleaning",
                    "frequency": "One-time"}.get(key) if not example else None
         sh.inp(f"C{r}", ex.get(key, default), fmt)
-    ws.row_dimensions[16].height = 6
     sh.section("B16", "2. JOB COSTS", "C16")
     inputs2 = [
         (17, "Supplies for this job ($)", "supplies", USD),

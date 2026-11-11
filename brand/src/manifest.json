@@ -1,0 +1,110 @@
+[
+ {
+  "src": "logo/icon.svg",
+  "out": "logo/icon-512.png",
+  "w": 128,
+  "h": 128,
+  "scale": 4,
+  "transparent": true
+ },
+ {
+  "src": "logo/logo.svg",
+  "out": "logo/logo-1120.png",
+  "w": 560,
+  "h": 128,
+  "scale": 2,
+  "transparent": true
+ },
+ {
+  "src": "logo/logo-reverse.svg",
+  "out": "logo/logo-reverse-1120.png",
+  "w": 560,
+  "h": 128,
+  "scale": 2,
+  "transparent": true
+ },
+ {
+  "src": "src/cover-free.html",
+  "out": "covers/cover-free.png",
+  "w": 1600,
+  "h": 1200
+ },
+ {
+  "src": "src/cover-starter.html",
+  "out": "covers/cover-starter.png",
+  "w": 1600,
+  "h": 1200
+ },
+ {
+  "src": "src/cover-complete.html",
+  "out": "covers/cover-complete.png",
+  "w": 1600,
+  "h": 1200
+ },
+ {
+  "src": "src/cover-premium.html",
+  "out": "covers/cover-premium.png",
+  "w": 1600,
+  "h": 1200
+ },
+ {
+  "src": "src/pin-undercharging.html",
+  "out": "social/pin-undercharging.png",
+  "w": 1000,
+  "h": 1500
+ },
+ {
+  "src": "src/pin-deep-clean.html",
+  "out": "social/pin-deep-clean.png",
+  "w": 1000,
+  "h": 1500
+ },
+ {
+  "src": "src/pin-estimate.html",
+  "out": "social/pin-estimate.png",
+  "w": 1000,
+  "h": 1500
+ },
+ {
+  "src": "src/pin-commercial.html",
+  "out": "social/pin-commercial.png",
+  "w": 1000,
+  "h": 1500
+ },
+ {
+  "src": "src/pin-profit.html",
+  "out": "social/pin-profit.png",
+  "w": 1000,
+  "h": 1500
+ },
+ {
+  "src": "src/ig-tip-markup.html",
+  "out": "social/ig-tip-markup.png",
+  "w": 1080,
+  "h": 1080
+ },
+ {
+  "src": "src/ig-tip-minimum.html",
+  "out": "social/ig-tip-minimum.png",
+  "w": 1080,
+  "h": 1080
+ },
+ {
+  "src": "src/ig-tip-overhead.html",
+  "out": "social/ig-tip-overhead.png",
+  "w": 1080,
+  "h": 1080
+ },
+ {
+  "src": "src/yt-price-a-clean.html",
+  "out": "social/yt-price-a-clean.png",
+  "w": 1280,
+  "h": 720
+ },
+ {
+  "src": "src/yt-markup-mistake.html",
+  "out": "social/yt-markup-mistake.png",
+  "w": 1280,
+  "h": 720
+ }
+]
