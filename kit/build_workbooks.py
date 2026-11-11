@@ -552,7 +552,7 @@ def build_quotes(wb, example):
 def build_margin(wb):
     sh = Sheet(wb, "Margin vs Markup", C["accent"])
     ws = sh.ws
-    sh.title("Margin vs Markup", "The #1 pricing mistake: adding 30% to your cost does NOT give you a 30% profit margin.")
+    sh.title("Margin vs Markup", "Adding 30% to your cost does NOT give you a 30% profit margin.")
     sh.widths(A=2, B=36, C=18, D=4, E=70)
     sh.section("B5", "CONVERTER", "C5")
     sh.label("B6", "Your cost ($)")
@@ -1386,8 +1386,8 @@ def build_free(path):
     wb._example = False
     sh = Sheet(wb, "Quick Price Check", C["primary"])
     ws = sh.ws
-    sh.title(f"Quick Price Check — free from {brand.NAME}",
-             "A simple version of our Price Calculator. Yellow = your numbers.")
+    sh.title("Quick Price Check",
+             f"Free from {brand.NAME}. A simple version of our Price Calculator. Yellow = your numbers.")
     sh.widths(A=2, B=40, C=18, D=4, E=70)
     sh.section("B5", "YOUR JOB", "C5")
     rows = [

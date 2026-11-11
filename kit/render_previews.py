@@ -26,8 +26,8 @@ SHEETS = {
 ROW_LIMIT = {"Clients": 14, "Schedule": 24, "Quote Table": 12}
 
 
-def render(sheet, slug, tmp, scale=2.2):
-    wb = openpyxl.load_workbook(SRC)
+def render(sheet, slug, tmp, scale=2.2, src=SRC):
+    wb = openpyxl.load_workbook(src)
     for ws in wb:
         ws.sheet_state = "visible" if ws.title == sheet else "hidden"
         ws.sheet_view.tabSelected = ws.title == sheet
@@ -62,6 +62,9 @@ def main(only=None):
             if only and slug not in only:
                 continue
             print("rendered", render(sheet, slug, tmp))
+        if not only or "free" in only:
+            free = ROOT / "products" / "free" / "TidyMargin-Quick-Price-Check-FREE.xlsx"
+            print("rendered", render("Quick Price Check", "free", tmp, src=free))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 

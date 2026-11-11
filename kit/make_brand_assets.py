@@ -47,7 +47,7 @@ LOGO = '<div class="logo"><img src="../logo/icon.svg" alt=""><span><span class="
 COVERS = {
     "free": ("FREE TOOL", "Quick Price Check", "Is your cleaning price really profitable?",
              ["Price for a true profit margin", "See the money markup pricing misses", "Excel + Google Sheets"],
-             "calculator", "b-soft"),
+             "free", "b-soft"),
     "starter": ("STARTER", "Cleaning Price Calculator", "Quote every job from your real costs.",
                 ["Sq ft, rooms, service type & condition", "Margin, card fees & overhead built in",
                  "50-job Quote Table + printable Estimate", "Excel + Google Sheets"], "calculator", "b-soft"),
@@ -60,7 +60,7 @@ COVERS = {
 }
 
 
-SECOND = {"starter": "estimate", "complete": "calculator", "premium": "commercial", "free": "margin"}
+SECOND = {"starter": "estimate", "complete": "calculator", "premium": "commercial"}
 
 
 def cover(key):
