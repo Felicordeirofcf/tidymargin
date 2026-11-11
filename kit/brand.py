@@ -5,7 +5,7 @@ FILE_PREFIX = "TidyMargin"
 TAGLINE = "Price every cleaning job for profit — and see where your money goes."
 VERSION = "1.0 (2026-11)"
 # Placeholders until the owner creates the accounts (see LAUNCH_CHECKLIST.md)
-SUPPORT_EMAIL = "support email: see your purchase receipt"
+SUPPORT_EMAIL = "tidymargin.help@gmail.com"
 STORE_URL = "the TidyMargin store on Payhip"
 
 COLORS = {

@@ -11,7 +11,7 @@ All screenshots are real exports from the workbooks with fictional example data.
 - **Tagline (bio):** Pricing and profit spreadsheets for cleaning businesses. Excel + Google Sheets. One-time purchase.
 - **About:** TidyMargin makes practical spreadsheet tools for small cleaning businesses: price every job from your real costs, send professional estimates and invoices, and see your profit every month. No subscription, no macros, and your data stays in your own file.
 - **Logo:** `brand/logo/icon-512.png` · **Banner:** `brand/covers/cover-complete.png`
-- **Support email:** set in Payhip > Settings (owner's dedicated support Gmail).
+- **Support email:** tidymargin.help@gmail.com (Payhip > Settings).
 
 ---
 

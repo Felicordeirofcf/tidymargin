@@ -163,7 +163,7 @@ All default numbers are examples. Replace them with your own costs.
 TidyMargin is a business-management tool, not accounting, tax or legal advice.
 
 LICENSE: one business, any number of its own devices. Please do not resell or share.
-SUPPORT: reply to your purchase email or use the contact link on the store page.
+SUPPORT: tidymargin.help@gmail.com (reply within 2 business days).
 Version {version}
 """
 

@@ -2,7 +2,7 @@
   "_comment": "Fill these after creating the Payhip store and the free hosting site. Empty checkout values show 'Coming soon'. seller_name may stay empty: public pages then show only the brand 'TidyMargin' (owner prefers not to appear). NEVER put passwords or API keys here.",
   "seller_name": "",
   "site_url": "",
-  "support_email": "",
+  "support_email": "tidymargin.help@gmail.com",
   "store_url": "",
   "checkout": {
     "free": "",

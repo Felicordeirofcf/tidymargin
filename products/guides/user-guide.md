@@ -166,4 +166,4 @@ Change the year in Settings when a new year starts, or keep one file per year.
 - **Your data is private.** Everything you type stays in your file. We never see it.
 - **License.** One business may use the kit on any number of its own devices. Please do not resell or share the files.
 - **Not professional advice.** TidyMargin is a business-management tool. It does not replace an accountant, tax professional or attorney.
-- **Support.** Reply to your purchase email or use the contact link on our store page. We answer within 2 business days.
+- **Support.** Email tidymargin.help@gmail.com. We answer within 2 business days.
