@@ -1,7 +1,7 @@
 # 05 — Arquitetura técnica
 
 ```
-global-ai-commerce/
+tidymargin/
 ├── kit/                     # código-fonte dos produtos
 │   ├── pricing.py           # motor de cálculo (fonte da verdade, testado)
 │   ├── build_workbooks.py   # gera os .xlsx (openpyxl) — 3 tiers + exemplo + grátis
@@ -37,12 +37,8 @@ global-ai-commerce/
 | Agentes **sob demanda** (CLI) | Custo zero, sem servidor e sem autonomia irrestrita. |
 | Banco de dados: **nenhum** | Por enquanto não há necessidade. Os dados de vendas vêm do export da Payhip. O Supabase só se justifica com volume real. |
 
-## Por que fica dentro deste repositório
-O repositório disponível é o da loja Samba Vest. O projeto novo foi isolado em `global-ai-commerce/`, sem alterar nenhum arquivo da Samba Vest:
-- Os scripts são Python/CJS. Não há arquivos `.ts`, que entrariam no `tsconfig` do Next.
-- O site é HTML puro, fora do build do Next.
-
-**Recomendação:** mover para um repositório próprio quando quiser. Basta copiar a pasta.
+## Repositório
+A TidyMargin tem repositório próprio (`Felicordeirofcf/tidymargin`), separado dos outros projetos do dono (Samba Vest, EvoTrainer e automatizador de cálculos). Ele começou dentro do `sambavest1` e foi movido para cá com o histórico completo.
 
 ## Dependências
 Todas gratuitas e de código aberto:

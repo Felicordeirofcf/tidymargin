@@ -9,7 +9,7 @@ Por que Cloudflare Pages:
 1. Crie uma conta grátis em dash.cloudflare.com com o Gmail da marca e ative a 2FA.
 2. Vá em Workers & Pages > Create > Pages > **Upload assets**.
 3. Dê o nome do projeto: `tidymargin` (o endereço fica `https://tidymargin.pages.dev`, se estiver livre).
-4. Arraste a **pasta** `global-ai-commerce/website/dist/` e clique em Deploy.
+4. Arraste a **pasta** `website/dist/` e clique em Deploy.
 5. Copie a URL para `site_url` em `deployment/store_config.json`, rode `python3 kit/build_site.py` (gera o sitemap e o canonical) e envie a pasta de novo.
 
 ## Web Analytics (grátis, sem cookies)

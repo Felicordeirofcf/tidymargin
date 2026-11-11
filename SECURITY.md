@@ -7,7 +7,7 @@
 - **Pagamentos 100% na Payhip e no PayPal.** Nunca tocamos em dados de cartão.
 - **Agentes com permissões mínimas, limites e logs mascarados.** Ações críticas são bloqueadas no código.
 - **Validação de entradas** nas planilhas (números ≥ 0, faixas de percentuais, listas) e nos agentes (`money()` rejeita valores inválidos).
-- **Dependências:** só bibliotecas mantidas e open source. Sem pacotes npm adicionados ao projeto Samba Vest.
+- **Dependências:** só bibliotecas mantidas e open source. Sem dependências npm no projeto (o Playwright é usado só localmente).
 - **Acessibilidade básica:** `alt` em todas as imagens, contraste da paleta, link "skip to content", HTML semântico, layout responsivo (testado).
 - **Direitos autorais:** todo o texto, as fórmulas, o logo e as imagens foram criados para este projeto. A fonte Inter é OFL. Não há conteúdo copiado de concorrentes.
 

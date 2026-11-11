@@ -2,7 +2,7 @@
 
 Empresa digital, com investimento inicial de US$ 0, que vende a consumidores dos EUA o **TidyMargin Cleaning Business Profit Kit**: planilhas (Excel e Google Sheets) para donos de empresas de limpeza calcularem preços com lucro e controlarem clientes, agenda, faturas e resultado.
 
-> Projeto isolado nesta pasta. Nenhum arquivo da loja Samba Vest foi alterado.
+> Repositório próprio da TidyMargin. Não tem relação com Samba Vest, EvoTrainer ou o automatizador de cálculos.
 
 ## Comece por aqui
 1. **Relatório final e pendências:** [docs/15_FINAL_DELIVERY_REPORT.md](docs/15_FINAL_DELIVERY_REPORT.md)
