@@ -89,7 +89,7 @@ def _transactions():
             continue
         pay = "Pending" if d >= D(2026, 11, 3) else "Received"
         tx.append((d, "Cleaning revenue", f"{svc} visit", client, svc, price, pay))
-    for m in range(1, 11):
+    for m in range(1, 12):
         month_end = D(2026, m, 28)
         month_hours = sum(r[5] for r in SCHEDULE if r[0].month == m and r[7] == "Completed")
         wages = round(month_hours * 18, 2)
@@ -105,6 +105,8 @@ def _transactions():
         ]
         if m in (3, 9):
             tx.append((D(2026, m, 12), "Equipment & tools", "Vacuum replacement", "", "", 289, "Paid"))
+    # expenses dated after the example "today" are still unpaid
+    tx = [t[:6] + ("Pending",) if t[0] > _CUTOFF and t[6] == "Paid" else t for t in tx]
     tx = [t for t in tx if t[5] != 0]
     tx.sort(key=lambda r: r[0])
     return tx

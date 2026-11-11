@@ -50,6 +50,10 @@ EDGE_CASES = {
                                    dict(property_type="Office", service_type="Office Cleaning",
                                         crew=3, hours_override=9, supplies=30, wage_override=22,
                                         margin_override=0.4)),
+    "condition_pets": ({7: "House", 8: "Standard Cleaning", 9: "Every 4 weeks", 10: 1800, 11: 3,
+                        12: 2, 13: 2, 15: "Pets / heavy use", 17: 12},
+                       dict(sqft=1800, bedrooms=3, bathrooms=2, crew=2, frequency="Every 4 weeks",
+                            condition="Pets / heavy use", supplies=12)),
     "tiny_job_minimum": ({7: "Apartment / Condo", 8: "Standard Cleaning", 9: "One-time", 10: 300, 13: 1},
                          dict(property_type="Apartment / Condo", sqft=300, crew=1)),
     "margin_too_high": ({7: "House", 8: "Standard Cleaning", 9: "One-time", 10: 1000, 13: 1, 24: 0.98}, None),
@@ -247,6 +251,13 @@ class TestWorkbooks(unittest.TestCase):
         self.assertAlmostEqual(inv["F34"].value, inv_total - sd.INVOICE["paid"])
         self.assertEqual(inv["F5"].value.date(), (sd.INVOICE["date"] + dt.timedelta(days=7)).date())
         self.assertEqual(inv["B10"].value, "Maple Dental")
+
+    def test_starter_estimate_without_client_list(self):
+        est = self.wb("starter")["Estimate"]
+        self.assertEqual(est["B11"].value, dict((c[0], c[4]) for c in sd.CLIENTS)["Morgan Price"])
+        self.assertEqual(est["E11"].value, est["B11"].value)
+        self.assertAlmostEqual(est["F32"].value, 435 * 0.95)
+        self.assertIn("295.00", est["H9"].value)
 
     # ----------------------------------------------------- premium ---------
     def test_planners(self):

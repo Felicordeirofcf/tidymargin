@@ -26,6 +26,8 @@ class TestBasics(unittest.TestCase):
         s = Settings()
         j = Job(sqft=2000, bedrooms=3, bathrooms=2, service_type="Deep Cleaning")
         self.assertAlmostEqual(labor_hours(j, s), (2 + 0.75 + 1.0) * 1.75)
+        j.condition = "Needs extra work"
+        self.assertAlmostEqual(labor_hours(j, s), (2 + 0.75 + 1.0) * 1.75 * 1.35)
         j.hours_override = 5
         self.assertEqual(labor_hours(j, s), 5)
 

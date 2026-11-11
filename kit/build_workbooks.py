@@ -30,7 +30,7 @@ from openpyxl.worksheet.datavalidation import DataValidation
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import brand  # noqa: E402
 import sample_data  # noqa: E402
-from pricing import FREQUENCIES, PROPERTY_TYPES, SERVICE_TYPES, Settings  # noqa: E402
+from pricing import CONDITIONS, FREQUENCIES, PROPERTY_TYPES, SERVICE_TYPES, Settings  # noqa: E402
 
 # ---------------------------------------------------------------- styles ----
 C = brand.COLORS
@@ -83,7 +83,7 @@ CLIENT_ROWS = (5, 304)
 SCHED_ROWS = (5, 604)
 TX_ROWS = (5, 1504)
 TIERS = {
-    "starter": ["start", "settings", "calculator", "quotes", "margin"],
+    "starter": ["start", "settings", "calculator", "quotes", "margin", "estimate"],
     "complete": ["start", "settings", "calculator", "quotes", "margin", "clients",
                  "schedule", "transactions", "summary", "estimate", "invoice"],
     "premium": ["start", "dashboard", "settings", "calculator", "quotes", "margin",
@@ -319,6 +319,9 @@ def build_settings(wb, tier, example):
     freq_rows = [(n, d, days) for n, (d, days) in FREQUENCIES.items()] + [(None, None, None)]
     table(56, "FREQUENCY DISCOUNTS (EXAMPLES)", ["Frequency", "Discount %", "Repeat every (days)"],
           freq_rows, ["FreqNames", "FreqDisc", "FreqDays"], [None, PCT, "0"])
+    cond_rows = [(n, m) for n, m in CONDITIONS.items()] + [(None, None)]
+    table(90, "HOME CONDITION (time multipliers — EXAMPLES)", ["Condition", "Labor time ×"],
+          cond_rows, ["CondNames", "CondMult"], [None, "0.00"])
     if tier != "starter":
         table(65, "EXPENSE & INCOME CATEGORIES", ["Category", "Group"],
               CATEGORIES + [(None, None)] * 4, ["CatNames", "CatGroup"], [None, None])
@@ -328,11 +331,12 @@ def build_settings(wb, tier, example):
     return sh
 
 
-def calc_hours_formula(prop, svc, sqft, bed, bath, override):
+def calc_hours_formula(prop, svc, sqft, bed, bath, override, cond=None):
+    cond_part = f'*IFERROR(INDEX(CondMult,MATCH({cond},CondNames,0)),1)' if cond else ""
     return (f'IF({override}<>"",{override},IF(OR({svc}="",{prop}=""),0,'
             f'(IFERROR({sqft}/SqftRate,0)+N({bed})*BedHours+N({bath})*BathHours)'
             f'*IFERROR(INDEX(SvcMult,MATCH({svc},SvcNames,0)),1)'
-            f'*IFERROR(INDEX(PropMult,MATCH({prop},PropNames,0)),1)))')
+            f'*IFERROR(INDEX(PropMult,MATCH({prop},PropNames,0)),1){cond_part}))')
 
 
 def build_calculator(wb, example):
@@ -354,12 +358,14 @@ def build_calculator(wb, example):
         (12, "Bathrooms", "bathrooms", "0.0"),
         (13, "Crew size (cleaners on site)", "crew", "0"),
         (14, "Labor hours override (optional)", "hours_override", NUM2),
+        (15, "Home condition (blank = normal)", "condition", None),
     ]
     for r, lab, key, fmt in inputs:
         sh.label(f"B{r}", lab)
         default = {"crew": 2, "property": "House", "service": "Standard Cleaning",
                    "frequency": "One-time"}.get(key) if not example else None
         sh.inp(f"C{r}", ex.get(key, default), fmt)
+    ws.row_dimensions[16].height = 6
     sh.section("B16", "2. JOB COSTS", "C16")
     inputs2 = [
         (17, "Supplies for this job ($)", "supplies", USD),
@@ -386,6 +392,7 @@ def build_calculator(wb, example):
     dv_list(ws, "=Settings!$B$48:$B$54", "C7")
     dv_list(ws, "=Settings!$B$38:$B$45", "C8")
     dv_list(ws, "=Settings!$B$58:$B$63", "C9")
+    dv_list(ws, "=Settings!$B$92:$B$96", "C15")
     dv_min(ws, "C10:C12")
     dv_min(ws, "C13", 1, False, None, "Crew size must be a whole number of 1 or more.")
     dv_min(ws, "C14")
@@ -397,7 +404,7 @@ def build_calculator(wb, example):
     dv_min(ws, "C28")
 
     sh.section("F5", "RESULTS", "G5")
-    hours = calc_hours_formula("C7", "C8", "C10", "C11", "C12", "C14")
+    hours = calc_hours_formula("C7", "C8", "C10", "C11", "C12", "C14", "C15")
     results = [
         (6, "Hourly pay used", '=IF(C23="",Wage,C23)', USD),
         (7, "Target margin used", '=IF(C24="",TargetMargin,C24)', PCT),
@@ -807,7 +814,7 @@ def build_summary(wb):
         (11, "Other variable costs", lambda m: f'=SUMIFS({T}$F:$F,{T}$J:$J,{m}$5,{T}$I:$I,"Other variable")', USD, False),
         (12, "Fixed costs (overhead)", lambda m: f'=SUMIFS({T}$F:$F,{T}$J:$J,{m}$5,{T}$I:$I,"Fixed")', USD, False),
         (13, "Total expenses", lambda m: f"=SUM({m}8:{m}12)", USD, True),
-        (14, "ESTIMATED PROFIT (before income tax)", lambda m: f"={m}6-{m}13", USD, True),
+        (14, "Estimated profit (before income tax)", lambda m: f"={m}6-{m}13", USD, True),
         (15, "Profit margin", lambda m: f'=IF({m}6>0,{m}14/{m}6,0)', PCT, False),
         (16, "Taxes paid / set aside", lambda m: f'=SUMIFS({T}$F:$F,{T}$J:$J,{m}$5,{T}$I:$I,"Tax")', USD, False),
         (17, "Profit after tax set-aside", lambda m: f"={m}14-{m}16", USD, True),
@@ -848,6 +855,7 @@ def build_summary(wb):
     for col, h in zip("CDEF", ["This month", "Previous month", "Change $", "Change %"]):
         ws[f"{col}34"] = h
         ws[f"{col}34"].font = font(10, True)
+        ws[f"{col}34"].alignment = Alignment(wrap_text=True, horizontal="center")
     ws["B34"] = '=TEXT(DATE(C4,C33,1),"mmmm yyyy")'
     ws["B34"].font = font(10, True)
     this_m, prev_m = "DATE($C$4,$C$33,1)", "EDATE(DATE($C$4,$C$33,1),-1)"
@@ -879,6 +887,7 @@ def build_summary(wb):
     for i in range(8):
         r = 34 + i
         sh.out(f"H{r}", f'=IF(INDEX(SvcNames,{i + 1})="","",INDEX(SvcNames,{i + 1}))')
+        ws[f"H{r}"].alignment = Alignment(shrink_to_fit=True)
         sh.out(f"I{r}", f'=IF(H{r}="","",SUMIFS({T}$F:$F,{T}$E:$E,H{r},{T}$H:$H,"Income",{T}$A:$A,">="&{y0},{T}$A:$A,"<="&{y1}))', USD)
         sh.out(f"J{r}", f'=IF(OR(H{r}="",$O$6=0),"",I{r}/$O$6)', PCT)
         sh.out(f"K{r}", f'=IF(H{r}="","",COUNTIFS(Schedule!$E:$E,H{r},Schedule!$I:$I,"Completed",Schedule!$A:$A,">="&{y0},Schedule!$A:$A,"<="&{y1}))', "0")
@@ -941,14 +950,24 @@ def build_document(wb, kind, example):
     ws["B8"] = "BILL TO" if is_inv else "PREPARED FOR"
     ws["B8"].font = font(10, True, C["white"])
     ws["B8"].fill = HEAD_FILL
+    has_clients = "Clients" in wb.sheetnames
     sh.inp("B9", ex.get("client"))
-    dv_list(ws, f"=Clients!$B${CLIENT_ROWS[0]}:$B${CLIENT_ROWS[1]}", "B9",
-            prompt="Pick a client from your Clients sheet (or type a name).")
     lookups = [("C", "Company"), ("F", "Address"), ("E", "Email"), ("D", "Phone")]
-    for i, (col, _lab) in enumerate(lookups):
-        c = ws[f"B{10 + i}"]
-        c.value = f'=IF($B$9="","",IFERROR(""&INDEX(Clients!${col}:${col},MATCH($B$9,Clients!$B:$B,0)),""))'
-        c.font = font(10, False, C["muted"])
+    if has_clients:
+        dv_list(ws, f"=Clients!$B${CLIENT_ROWS[0]}:$B${CLIENT_ROWS[1]}", "B9",
+                prompt="Pick a client from your Clients sheet (or type a name).")
+        for i, (col, _lab) in enumerate(lookups):
+            c = ws[f"B{10 + i}"]
+            c.value = f'=IF($B$9="","",IFERROR(""&INDEX(Clients!${col}:${col},MATCH($B$9,Clients!$B:$B,0)),""))'
+            c.font = font(10, False, C["muted"])
+        addr = '=IF($B$9="","",IFERROR(""&INDEX(Clients!$F:$F,MATCH($B$9,Clients!$B:$B,0)),""))'
+    else:  # Starter: no client list -> type the details
+        client = dict((c[0], c) for c in sample_data.CLIENTS).get(ex.get("client"))
+        vals = [client[1], client[4], client[3], client[2]] if client else [None] * 4
+        for i, v in enumerate(vals):
+            sh.inp(f"B{10 + i}", v or None)
+        ws["A10"] = None
+        addr = '=IF(B11="","",B11)'
     ws["D8"] = "SERVICE DETAILS"
     ws["D8"].font = font(10, True, C["white"])
     for col in "DEF":
@@ -961,7 +980,7 @@ def build_document(wb, kind, example):
     ws.merge_cells("E10:F10")
     dv_list(ws, "=Settings!$B$58:$B$63", "E10")
     ws["D11"] = "Address"
-    ws["E11"] = '=IF(B13="","",B13)' if False else '=IF($B$9="","",IFERROR(""&INDEX(Clients!$F:$F,MATCH($B$9,Clients!$B:$B,0)),""))'
+    ws["E11"] = addr
     ws.merge_cells("E11:F11")
     for ref in ("D9", "D10", "D11"):
         ws[ref].font = font(10, True)
@@ -1116,6 +1135,7 @@ def build_dashboard(wb):
     for s, color in zip(line.series, [C["primary"], C["success"]]):
         s.graphicalProperties.line.solidFill = color
         s.graphicalProperties.line.width = 28000
+        s.smooth = False
     ws.add_chart(line, "B19")
     bar = BarChart()
     bar.type = "bar"

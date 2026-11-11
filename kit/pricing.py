@@ -9,6 +9,7 @@ Key definitions (all money in USD, percentages as fractions, e.g. 0.30):
 
 * Labor hours  = (sqft / sqft_per_labor_hour + bedrooms*bed_hours
                   + bathrooms*bath_hours) * service_multiplier * property_multiplier
+                  * condition_multiplier
                  (or the user's manual override)
 * Labor cost   = labor hours * wage * (1 + payroll burden)
 * Direct cost  = labor + supplies + travel (miles * cost per mile) + other direct
@@ -47,6 +48,13 @@ PROPERTY_TYPES = {  # name -> labor-time multiplier (EXAMPLE values, editable)
     "Other": 1.0,
 }
 
+CONDITIONS = {  # name -> labor-time multiplier (EXAMPLE values, editable)
+    "Well kept": 1.0,
+    "Average": 1.1,
+    "Pets / heavy use": 1.2,
+    "Needs extra work": 1.35,
+}
+
 FREQUENCIES = {  # name -> (discount, interval in days; 0 = not recurring)
     "One-time": (0.0, 0),
     "Weekly": (0.15, 7),
@@ -74,6 +82,7 @@ class Settings:
     service_types: dict = field(default_factory=lambda: dict(SERVICE_TYPES))
     property_types: dict = field(default_factory=lambda: dict(PROPERTY_TYPES))
     frequencies: dict = field(default_factory=lambda: dict(FREQUENCIES))
+    conditions: dict = field(default_factory=lambda: dict(CONDITIONS))
 
 
 @dataclass
@@ -86,6 +95,7 @@ class Job:
     bathrooms: float = 0.0
     crew: float = 1.0
     hours_override: float | None = None
+    condition: str = ""                # blank = no adjustment (x1.0)
     supplies: float = 0.0
     miles: float = 0.0
     other_direct: float = 0.0
@@ -117,7 +127,8 @@ def labor_hours(job: Job, s: Settings) -> float:
         + job.bedrooms * s.hours_per_bedroom
         + job.bathrooms * s.hours_per_bathroom
     )
-    return base * s.service_types[job.service_type] * s.property_types[job.property_type]
+    cond = s.conditions.get(job.condition, 1.0)
+    return base * s.service_types[job.service_type] * s.property_types[job.property_type] * cond
 
 
 def quote(job: Job, s: Settings) -> dict:
