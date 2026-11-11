@@ -1,0 +1,6 @@
+{
+  "refund_reserve_pct": 0.10,
+  "tax_reserve_pct": 0.0,
+  "already_withdrawn_or_spent_usd": 0.0,
+  "_note": "tax_reserve_pct must be defined with an accountant (Brazil: Carnê-Leão / MEI / export of services). 0 = not configured."
+}

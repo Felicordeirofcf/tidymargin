@@ -1,0 +1,11 @@
+# customer / financial data never goes to git
+analytics/data/sales.csv
+analytics/data/traffic.csv
+analytics/data/support_inbox.csv
+agents/logs/
+reports/agent_runs/
+reports/support_drafts/
+reports/PENDING_APPROVALS.md
+analytics/dashboard.html
+__pycache__/
+*.pyc

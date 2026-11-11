@@ -372,7 +372,8 @@ def support_email_html():
 
 
 def seller():
-    return esc(CFG.get("seller_name") or "the owner of TidyMargin")
+    # Public pages show only the brand. The owner's legal identity stays with Payhip/PayPal (KYC).
+    return esc(CFG.get("seller_name") or "TidyMargin")
 
 
 def text_page(slug, title, desc, md):
@@ -585,7 +586,7 @@ def main():
         urls = ["", "help.html", "privacy.html", "terms.html", "refund.html", "articles/index.html"] + [f"articles/{a['slug']}.html" for a in arts]
         (DIST / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                                           + "".join(f"  <url><loc>{site}/{u}</loc><lastmod>2026-11-11</lastmod></url>\n" for u in urls) + "</urlset>\n")
-    warnings = [k for k in ("site_url", "support_email", "seller_name") if not CFG.get(k)]
+    warnings = [k for k in ("site_url", "support_email") if not CFG.get(k)]
     warnings += [f"checkout.{k}" for k, v in CFG["checkout"].items() if not v]
     print(f"built {len(list(DIST.rglob('*.html')))} pages into {DIST}")
     if warnings:

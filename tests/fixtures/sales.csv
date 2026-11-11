@@ -1,0 +1,6 @@
+date,order_id,product,status,gross_usd,fees_usd,source,country
+2026-11-20,T1,TidyMargin Starter,paid,9.00,1.59,pinterest,US
+2026-11-21,T2,TidyMargin Complete,paid,19.00,3.04,youtube,US
+2026-11-21,T3,TidyMargin Complete,pending,19.00,0,youtube,US
+2026-11-22,T4,TidyMargin Premium,refunded,29.00,0,google,US
+2026-11-22,T5,Quick Price Check FREE,paid,0,0,pinterest,US
