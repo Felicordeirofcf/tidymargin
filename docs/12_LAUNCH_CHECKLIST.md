@@ -14,9 +14,9 @@ Legenda: ✅ concluído e testado · 🟡 implementado, não testado · 🔒 pen
 
 ## Contas (você, cerca de 1 a 2 h)
 - 🔒 Gmail da marca + 2FA
-- 🔒 PayPal Business com CPF, nome "TidyMargin", banco no mesmo CPF + 2FA
-- ⛔ Aprovação e verificação do PayPal
-- 🔒 Payhip Free + conectar PayPal + moeda USD + 2FA
+- 🔒 Stripe pessoa física (CPF), nome público "TidyMargin", banco no mesmo CPF + 2FA (o PayPal Empresarial exige CNPJ)
+- ⛔ Verificação da Stripe (KYC)
+- 🔒 Payhip Free + conectar Stripe + moeda USD + 2FA
 - 🔒 Cloudflare (Pages + Web Analytics) + 2FA
 
 ## Loja

@@ -2,6 +2,9 @@
 
 **Nenhum pagamento real está ativo.** Só declare "pagamentos habilitados" depois que o PayPal aprovar a conta e uma compra-teste for concluída.
 
+## Atualização (2026-11-11): sem CNPJ
+O PayPal Empresarial no Brasil pede CNPJ. Caminho principal: **Stripe, pessoa física com CPF** (a Payhip aceita Stripe no Brasil), com o nome público e o descritor da fatura "TidyMargin". As tarifas da Stripe para cartão internacional e conversão **ainda não foram confirmadas**: confira no painel e atualize o cálculo abaixo, que usa o PayPal como referência. Reserva: PayPal Conta Pessoal.
+
 ## Fluxo do dinheiro
 Cliente (USD) → Payhip (retém 5%) → PayPal Brasil (tarifa de recebimento internacional) → saldo em USD → saque para o banco brasileiro com conversão (spread) → BRL.
 

@@ -29,9 +29,13 @@ Fonte: `market-research/PLATFORM_RESEARCH.md`. Os dados vieram de trechos de bus
 **Sua identidade fica privada.** A Payhip e o PayPal pedem seus dados reais (CPF, banco) só para verificação. Na loja pública aparece apenas **TidyMargin**.
 
 1. **Gmail de suporte:** crie um Gmail novo só para a marca, por exemplo `tidymargin.support@gmail.com` (é grátis). Use-o para a Payhip, o PayPal Business e a Cloudflare.
-2. **PayPal:** em paypal.com/br, crie uma conta **Empresarial/Business**, de graça, com o seu CPF (pessoa física é permitida). Em "Nome da empresa" coloque **TidyMargin**: é o nome que o comprador vê. Vincule sua conta bancária do mesmo CPF e confirme a tabela de tarifas.
+2. **Processador de pagamento (sem CNPJ):** o PayPal **Empresarial** no Brasil exige CNPJ. Situação em 2026-11-11: o dono não tem CNPJ, então:
+   - **Recomendado: Stripe, pessoa física (CPF).** Crie a conta em stripe.com (país Brasil, tipo Individual), com conta bancária no mesmo CPF. Defina o nome público como **TidyMargin**, o descritor da fatura como **TIDYMARGIN** e o e-mail de suporte como tidymargin.help@gmail.com. Confira no painel as tarifas de cartão internacional e de conversão.
+   - **Reserva: PayPal Conta Pessoal (CPF).** O comprador pode ver o seu nome no comprovante.
+   - **Formalização (MEI):** é uma decisão do dono com um contador. Tem custo mensal (DAS).
+   - **Nunca** use CNPJ inventado ou de terceiros.
 3. **Payhip:** em payhip.com crie a conta Free com o Gmail da marca. Depois:
-   - em Settings > Payments, conecte o PayPal;
+   - em Settings > Payments, conecte a Stripe (ou o PayPal);
    - confira a moeda USD;
    - em Store name e branding, use os textos de `store/PAYHIP_LISTINGS.md` e o logo `brand/logo/icon-512.png`.
 4. **Produtos:** crie 4 produtos digitais, enviando os ZIPs de `products/release/`, as capas de `brand/covers/` e as capturas de `brand/screenshots/` como imagens extras. Cole títulos, descrições, tags e FAQ de `store/PAYHIP_LISTINGS.md`.
